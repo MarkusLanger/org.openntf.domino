@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.openntf.domino</groupId>
+	<artifactId>oda-eclipse-dependencies</artifactId>
+	<version>1.5.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>p2 Dependency Site for Eclipse Use</name>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>reficio</id>
+			<url>http://repo.reficio.org/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.reficio</groupId>
+				<artifactId>p2-maven-plugin</artifactId>
+				<version>1.2.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact><id>com.google.guava:guava:18.0</id></artifact>
+								
+								<artifact><id>com.tinkerpop.blueprints:blueprints-core:2.6.0</id></artifact>
+								<artifact><id>com.tinkerpop:frames:2.6.0</id></artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
