@@ -1,16 +1,16 @@
 /*
  * Copyright 2013
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at:
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing 
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
 package org.openntf.domino.utils;
@@ -77,9 +77,9 @@ public enum Factory {
 	/**
 	 * Printer class (will be modified by XSP-environment), so that the Factory prints directly to Console (so no "HTTP JVM" Prefix is
 	 * there)
-	 * 
+	 *
 	 * @author Roland Praml, FOCONIS AG
-	 * 
+	 *
 	 */
 	public static class Printer {
 		public void println(final String s) {
@@ -91,14 +91,14 @@ public enum Factory {
 
 	/**
 	 * An identifier for the different session types the factory can create.
-	 * 
+	 *
 	 * @author Roland Praml, FOCONIS AG
-	 * 
+	 *
 	 */
 	public enum SessionType {
 		/**
 		 * The current session. This means:
-		 * 
+		 *
 		 * <ul>
 		 * <li>The current XPage session, if you are IN a XPage-Thread. This is equivalent to the "session" SSJS variable</li>
 		 * <li>The current XOTS session, if you are IN a XOTS-Thread. <br>
@@ -193,16 +193,16 @@ public enum Factory {
 
 	}
 
-	// this thread config wraps everything and squelches errors (does not change default behavior 
+	// this thread config wraps everything and squelches errors (does not change default behavior
 	public static ThreadConfig PERMISSIVE_THREAD_CONFIG = new ThreadConfig(Fixes.values(), AutoMime.WRAP_ALL, false);
 
 	public static ThreadConfig STRICT_THREAD_CONFIG = new ThreadConfig(Fixes.values(), AutoMime.WRAP_32K, true);
 
 	/**
 	 * Container Class for all statistic counters
-	 * 
+	 *
 	 * @author Roland Praml, FOCONIS AG
-	 * 
+	 *
 	 */
 	private static class Counters {
 
@@ -224,7 +224,7 @@ public enum Factory {
 
 		/**
 		 * Returns a counter for a certain class
-		 * 
+		 *
 		 * @param clazz
 		 *            the class
 		 * @return a counter for the class
@@ -250,9 +250,9 @@ public enum Factory {
 
 	/**
 	 * We have so many threadLocals here, so that it is worth to handle them all in a container class.
-	 * 
+	 *
 	 * @author Roland Praml, FOCONIS AG
-	 * 
+	 *
 	 */
 	private static class ThreadVariables {
 		private WrapperFactory wrapperFactory;
@@ -361,7 +361,7 @@ public enum Factory {
 
 	/**
 	 * load the configuration
-	 * 
+	 *
 	 */
 	private static void loadEnvironment(final Scanner scanner) {
 		if (ENVIRONMENT == null) {
@@ -472,7 +472,7 @@ public enum Factory {
 
 	/**
 	 * Gets the lotus count.
-	 * 
+	 *
 	 * @return the lotus count
 	 */
 	public static int getLotusCount() {
@@ -491,7 +491,7 @@ public enum Factory {
 
 	/**
 	 * Gets the recycle error count.
-	 * 
+	 *
 	 * @return the recycle error count
 	 */
 	public static int getRecycleErrorCount() {
@@ -508,7 +508,7 @@ public enum Factory {
 
 	/**
 	 * Gets the auto recycle count.
-	 * 
+	 *
 	 * @return the auto recycle count
 	 */
 	public static int getAutoRecycleCount() {
@@ -517,7 +517,7 @@ public enum Factory {
 
 	/**
 	 * Count auto recycle.
-	 * 
+	 *
 	 * @return the int
 	 */
 	public static int countAutoRecycle(final Class<?> c) {
@@ -531,7 +531,7 @@ public enum Factory {
 
 	/**
 	 * Gets the manual recycle count.
-	 * 
+	 *
 	 * @return the manual recycle count
 	 */
 	public static int getManualRecycleCount() {
@@ -552,7 +552,7 @@ public enum Factory {
 
 	/**
 	 * get the active object count
-	 * 
+	 *
 	 * @return The current active object count
 	 */
 	public static int getActiveObjectCount() {
@@ -565,7 +565,7 @@ public enum Factory {
 
 	/**
 	 * Determine the run context where we are
-	 * 
+	 *
 	 * @return The active RunContext
 	 */
 	public static RunContext getRunContext() {
@@ -620,7 +620,7 @@ public enum Factory {
 
 	/**
 	 * returns the wrapper factory for this thread
-	 * 
+	 *
 	 * @return the thread's wrapper factory
 	 */
 	public static WrapperFactory getWrapperFactory() {
@@ -644,7 +644,7 @@ public enum Factory {
 
 	/**
 	 * Returns the wrapper factory if initialized
-	 * 
+	 *
 	 * @return The active WrapperFactory
 	 */
 	public static WrapperFactory getWrapperFactory_unchecked() {
@@ -655,7 +655,7 @@ public enum Factory {
 	// RPr: A setter is normally not needed. The wrapperFactory should be configure with an application service!
 	//	/**
 	//	 * Set/changes the wrapperFactory for this thread
-	//	 * 
+	//	 *
 	//	 * @param wf
 	//	 *            The new WrapperFactory
 	//	 */
@@ -663,7 +663,7 @@ public enum Factory {
 	//		currentWrapperFactory.set(wf);
 	//	}
 
-	// --- session handling 
+	// --- session handling
 
 	//	@SuppressWarnings("rawtypes")
 	//	@Deprecated
@@ -678,7 +678,7 @@ public enum Factory {
 
 	/*
 	 * (non-JavaDoc)
-	 * 
+	 *
 	 * @see org.openntf.domino.WrapperFactory#fromLotus(lotus.domino.Base, FactorySchema, Base)
 	 */
 	/**
@@ -711,7 +711,7 @@ public enum Factory {
 
 	/**
 	 * From lotus wraps a given lotus collection in an org.openntf.domino collection
-	 * 
+	 *
 	 * @param <T>
 	 *            the generic org.openntf.domino type (drapper)
 	 * @param <D>
@@ -736,7 +736,7 @@ public enum Factory {
 
 	/**
 	 * From lotus wraps a given lotus collection in an org.openntf.domino collection
-	 * 
+	 *
 	 * @param <T>
 	 *            the generic org.openntf.domino type (wrapper)
 	 * @param <D>
@@ -762,10 +762,10 @@ public enum Factory {
 	// RPr: Deprecated, so I commented this out
 	//	/**
 	//	 * From lotus.
-	//	 * 
+	//	 *
 	//	 * @deprecated Use {@link #fromLotus(lotus.domino.Base, FactorySchema, Base)} instead
-	//	 * 
-	//	 * 
+	//	 *
+	//	 *
 	//	 * @param <T>
 	//	 *            the generic type
 	//	 * @param lotus
@@ -784,9 +784,9 @@ public enum Factory {
 	//
 	//	/**
 	//	 * From lotus.
-	//	 * 
+	//	 *
 	//	 * @deprecated Use {@link #fromLotus(Collection, FactorySchema, Base)} instead
-	//	 * 
+	//	 *
 	//	 * @param <T>
 	//	 *            the generic type
 	//	 * @param lotusColl
@@ -815,7 +815,7 @@ public enum Factory {
 
 	/**
 	 * Wrap column values, encapsulating {@link lotus.domino.DateTime}s, {@link lotus.domino.DateRange}s, and {@link lotus.domino.Name}s.
-	 * 
+	 *
 	 * @param values
 	 *            the values
 	 * @return a {@link java.util.Vector} with the objects from the collection appropriately wrapped.
@@ -832,7 +832,7 @@ public enum Factory {
 
 	/**
 	 * Method to unwrap a object
-	 * 
+	 *
 	 * @param the
 	 *            object to unwrap
 	 * @return the unwrapped object
@@ -845,7 +845,7 @@ public enum Factory {
 
 	/**
 	 * Gets the current session. Equivalent to calling {@link #getSession(SessionType)} with {@link SessionType.CURRENT}.
-	 * 
+	 *
 	 * @return the session
 	 */
 	public static org.openntf.domino.Session getSession() {
@@ -854,7 +854,7 @@ public enum Factory {
 
 	/**
 	 * Gets the session full access.
-	 * 
+	 *
 	 * @return the session full access
 	 * @deprecated Use {@link #getSession(SessionType)} with {@link SessionType.FULL_ACCESS} instead.
 	 */
@@ -865,7 +865,7 @@ public enum Factory {
 
 	/**
 	 * Gets the trusted session.
-	 * 
+	 *
 	 * @return the trusted session
 	 * @deprecated Use {@link #getSession(SessionType)} with {@link SessionType.TRUSTED} instead.
 	 */
@@ -876,7 +876,7 @@ public enum Factory {
 
 	/**
 	 * Gets the trusted session.
-	 * 
+	 *
 	 * @return the trusted session
 	 * @deprecated Use {@link #getSession(SessionType)} with {@link SessionType.SIGNER} instead.
 	 */
@@ -935,7 +935,7 @@ public enum Factory {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param mode
 	 *            The type of session to create
 	 * @return A Session object corresponding to the given type
@@ -981,7 +981,7 @@ public enum Factory {
 
 	/**
 	 * Returns the current session, if available. Does never create a session
-	 * 
+	 *
 	 * @return the session
 	 */
 	public static org.openntf.domino.Session getSession_unchecked(final SessionType type) {
@@ -991,7 +991,7 @@ public enum Factory {
 
 	/**
 	 * Sets the session for a certain sessionMode
-	 * 
+	 *
 	 */
 	//	public static void setSession(final lotus.domino.Session session, final SessionType mode) {
 	//		if (session instanceof org.openntf.domino.Session) {
@@ -1023,7 +1023,7 @@ public enum Factory {
 	//
 	//	/**
 	//	 * Sets the current trusted session
-	//	 * 
+	//	 *
 	//	 * @param session
 	//	 *            the lotus session
 	//	 */
@@ -1033,7 +1033,7 @@ public enum Factory {
 	//
 	//	/**
 	//	 * Sets the current session with full access
-	//	 * 
+	//	 *
 	//	 * @param session
 	//	 *            the lotus session
 	//	 */
@@ -1053,7 +1053,7 @@ public enum Factory {
 	// RPr: use getSession_unchecked().getCurrentDatabase
 	//	/**
 	//	 * Returns the session's current database if available. Does never create a session.
-	//	 * 
+	//	 *
 	//	 * @see #getSession_unchecked()
 	//	 * @return The session's current database
 	//	 */
@@ -1141,7 +1141,7 @@ public enum Factory {
 
 	/**
 	 * Begin with a clear environment. Initialize this thread
-	 * 
+	 *
 	 */
 	public static void initThread(final ThreadConfig tc) { // RPr: Method was deliberately renamed
 		if (!started) {
@@ -1199,7 +1199,7 @@ public enum Factory {
 		} finally {
 			tv.clear();
 			threadVariables_.set(null);
-			System.gc();
+			//GIS-AG 2016-01-18 System.gc();
 		}
 		if (counters != null) {
 			System.out.println(dumpCounters(true));
@@ -1316,7 +1316,7 @@ public enum Factory {
 
 		String defaultApiPath = null; // maybe we set this to ODA.nsf
 
-		// In XPages environment, these factories will be replaced 
+		// In XPages environment, these factories will be replaced
 		defaultNamedSessionFactory = new NamedSessionFactory(defaultApiPath);
 		defaultNamedSessionFullAccessFactory = new SessionFullAccessFactory(defaultApiPath);
 		defaultSessionFactories[SessionType.SIGNER.index] = new NativeSessionFactory(defaultApiPath);
@@ -1390,7 +1390,7 @@ public enum Factory {
 	 * <li>If there is no database.locale, the system default locale is returned</li>
 	 * </ul>
 	 * This locale should be used, if you write log entries in a server log for example.
-	 * 
+	 *
 	 * @return the currentDatabase-locale or default-locale
 	 */
 	public static Locale getInternalLocale() {
@@ -1413,7 +1413,7 @@ public enum Factory {
 	 * <li>If there is no database.locale, the system default locale is returned</li>
 	 * </ul>
 	 * This locale should be used, if you generate messages for the current (browser)user.
-	 * 
+	 *
 	 * @return the external-locale, currentDatabase-locale or default-locale
 	 */
 	public static Locale getExternalLocale() {
@@ -1425,7 +1425,7 @@ public enum Factory {
 
 	/**
 	 * Debug method to get statistics
-	 * 
+	 *
 	 */
 	public static String dumpCounters(final boolean details) {
 		if (counters == null)
@@ -1483,7 +1483,7 @@ public enum Factory {
 
 	//	/**
 	//	 * Gets the parent database.
-	//	 * 
+	//	 *
 	//	 * @param base
 	//	 *            the base
 	//	 * @return the parent database
@@ -1503,7 +1503,7 @@ public enum Factory {
 
 	/**
 	 * Gets the session.
-	 * 
+	 *
 	 * @param base
 	 *            the base
 	 * @return the session
@@ -1773,11 +1773,11 @@ public enum Factory {
 
 	/**
 	 * To lotus note collection.
-	 * 
+	 *
 	 * @param collection
 	 *            the collection
 	 * @return the org.openntf.domino. note collection
-	 * 
+	 *
 	 * @deprecated this should be moved to {@link CollectionUtils}
 	 */
 	@Deprecated
@@ -1795,10 +1795,10 @@ public enum Factory {
 
 	/**
 	 * Add a hook that will run on the next "terminate" call
-	 * 
+	 *
 	 * @param hook
 	 *            the hook that should run on next terminate
-	 * 
+	 *
 	 */
 	public static void addTerminateHook(final Runnable hook, final boolean global) {
 		if (global) {
@@ -1825,7 +1825,7 @@ public enum Factory {
 
 	/**
 	 * Remove a shutdown hook
-	 * 
+	 *
 	 * @param hook
 	 *            the hook that should be removed
 	 */

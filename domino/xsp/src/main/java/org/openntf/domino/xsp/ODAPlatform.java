@@ -23,6 +23,7 @@ import com.ibm.commons.Platform;
 import com.ibm.commons.extension.ExtensionManager;
 import com.ibm.commons.util.StringUtil;
 import com.ibm.designer.runtime.Application;
+import com.ibm.domino.napi.c.BackendBridge;
 
 public enum ODAPlatform {
 	;
@@ -38,7 +39,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Start up the ODAPlatform.
-	 * 
+	 *
 	 * <ol>
 	 * <li>configure the {@link ServiceLocatorFinder}</li>
 	 * <li>startup the {@link Factory}</li>
@@ -46,7 +47,7 @@ public enum ODAPlatform {
 	 * <li>Call {@link #verifyIGetEntryByKey()}</li>
 	 * <li>Start the {@link Xots} with 10 threads (if it is not completely disabled with "XotsTasks=0" in oda.nsf)</li>
 	 * </ol>
-	 * 
+	 *
 	 * This is done automatically on server start or can manually invoked with<br>
 	 * <code>tell http osgi oda start</code><br>
 	 * on the server console.
@@ -96,7 +97,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Stops the ODA Platform and tries to kill all running Xots Tasks.
-	 * 
+	 *
 	 * This is done automatically on server shutdown or can manually invoked with<br>
 	 * <code>tell http osgi oda stop</code><br>
 	 * on the server console.
@@ -113,28 +114,28 @@ public enum ODAPlatform {
 
 	/**
 	 * there is one weird thing in getViewEntryByKeyWithOptions. IBM messed up something in the JNI calls.
-	 * 
+	 *
 	 * a correct call would look like this:
-	 * 
+	 *
 	 * <pre>
 	 * jclass activityClass = env -&gt; GetObjectClass(dummyView);
 	 * jmethodID mID = env -&gt; GetMethodID(activityClass, &quot;iGetEntryByKey&quot;, &quot;...&quot;);
 	 * entry = env -&gt; CallIntMethod(obj, mID);
 	 * </pre>
-	 * 
+	 *
 	 * IBM's code probably looks like this:
-	 * 
+	 *
 	 * <pre>
 	 * jclass activityClass = env->GetObjectClass(lotus.domino.local.View); <font color=red>&lt;--- This is wrong!</font>
-	 * jmethodID mID = env->GetMethodID(activityClass, "iGetEntryByKey", "..."); 
+	 * jmethodID mID = env->GetMethodID(activityClass, "iGetEntryByKey", "...");
 	 * entry = env->CallIntMethod(obj, mID);
 	 * </pre>
-	 * 
+	 *
 	 * so we get the method-pointer mID for the "lotus.domino.local.View" and we call this method on an "org.openntf.domino.impl.View".
-	 * 
+	 *
 	 * This is something that normally wouldn't work. But C/C++ does no sanity checks if it operates on the correct class and will call a
 	 * (more or less) random method that is on position "mID". (compare to a 'goto 666')
-	 * 
+	 *
 	 * To get that working, we must reorder the methods in the View class, so that "iGetEntryByKey" is on the correct place. Every time you
 	 * add or remove methods to the View class (and maybe also to the Base class) the position must be checked again. This is done in the
 	 * this method:
@@ -155,9 +156,10 @@ public enum ODAPlatform {
 		@SuppressWarnings("deprecation")
 		View dummyView = new org.openntf.domino.impl.View();
 		try {
-			//			BackendBridge.getViewEntryByKeyWithOptions(dummyView, null, 42);
+			//GIS-AG 2016-01-18
+			BackendBridge.getViewEntryByKeyWithOptions(dummyView, null, 42);
 		} catch (BackendBridgeSanityCheckException allGood) {
-			Factory.println("Operation of BackendBridge.getViewEntryByKeyWithOptions verified");
+			//GIS-AG 2016-01-18 Factory.println("Operation of BackendBridge.getViewEntryByKeyWithOptions verified");
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -178,7 +180,7 @@ public enum ODAPlatform {
 	 * <li>System.getProperty()</li>
 	 * <li>Os.OSGetEnvironmentString() = notes.ini</li>
 	 * </ol>
-	 * 
+	 *
 	 * @param propertyName
 	 *            String property to check for
 	 * @return String value for the property
@@ -202,7 +204,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets a notes.ini property, splitting on commas
-	 * 
+	 *
 	 * @param propertyName
 	 *            String to look up on
 	 * @return String[] of values for the given property, split on commas
@@ -226,7 +228,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets an Xsp property or notes.ini variable for PLUGIN_ID (="org.openntf.domino.xsp")
-	 * 
+	 *
 	 * @return String value for the PLUGIN_ID property
 	 * @since org.openntf.domino.xsp 2.5.0
 	 */
@@ -236,7 +238,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets an Xsp property or notes.ini variable for PLUGIN_ID (="org.openntf.domino.xsp"), splitting on commas
-	 * 
+	 *
 	 * @return String[] of values for the given property, split on commas
 	 * @since org.openntf.domino 5.0.0
 	 */
@@ -253,7 +255,7 @@ public enum ODAPlatform {
 	 * <li>System.getProperty()</li>
 	 * <li>Os.OSGetEnvironmentString() = notes.ini</li>
 	 * </ol>
-	 * 
+	 *
 	 * @param app
 	 *            the Application to use (or null for current one)
 	 * @param propertyName
@@ -289,7 +291,7 @@ public enum ODAPlatform {
 	 * <li>System.getProperty()</li>
 	 * <li>Os.OSGetEnvironmentString() = notes.ini</li>
 	 * </ol>
-	 * 
+	 *
 	 * @param app
 	 *            the Application to use (or null for current one)
 	 * @param propertyName
@@ -317,7 +319,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Checks whether or not the API is enabled for the current database
-	 * 
+	 *
 	 * @param ctx
 	 *            the current Application (if none specified, the current is used)
 	 * @return boolean whether or not enabled
@@ -346,7 +348,7 @@ public enum ODAPlatform {
 
 	/**
 	 * common code to test if a flag is set in the xsp.properties file for the "org.openntf.domino.xsp" value.
-	 * 
+	 *
 	 * @param app
 	 *            the Application (or null for current one)
 	 * @param flagName
@@ -379,7 +381,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets the AutoMime option enabled for the application, an instance of the enum {@link AutoMime}
-	 * 
+	 *
 	 * @param ctx
 	 *            FacesContext
 	 * @return AutoMime
@@ -413,7 +415,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets whether the khan flag is enabled for the application
-	 * 
+	 *
 	 * @param ctx
 	 *            FacesContext
 	 * @return boolean
@@ -425,7 +427,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets whether the raid flag is enabled for the application
-	 * 
+	 *
 	 * @param ctx
 	 *            FacesContext
 	 * @return boolean
@@ -439,7 +441,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets whether the godmode flag is enabled for the application
-	 * 
+	 *
 	 * @param ctx
 	 *            FacesContext
 	 * @return boolean
@@ -452,7 +454,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Gets whether the marcel flag is enabled for the application
-	 * 
+	 *
 	 * @param ctx
 	 *            FacesContext
 	 * @return boolean
@@ -464,7 +466,7 @@ public enum ODAPlatform {
 
 	/**
 	 * Whether or not the library is running in debug. In debug, messages are written to the server console
-	 * 
+	 *
 	 * @return boolean debug or not
 	 * @since org.openntf.domino.xsp 2.5.0
 	 */
